@@ -1,15 +1,12 @@
-name: Build Lemon Client 1.12.2
+name: lemon 0.0.9 
 
 on:
   push:
-    branches: [ "main", "master" ]
-  pull_request:
-    branches: [ "main", "master" ]
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest # Chuyển lên bản mới nhất để lấy máy ảo nhanh hơn
+    runs-on: ubuntu-latest 
 
     steps:
     - name: Checkout repository
@@ -26,10 +23,10 @@ jobs:
       run: chmod +x gradlew
 
     - name: Setup Forge Workspace
-      # Thêm --no-daemon và --console=plain để log sạch hơn và đỡ tốn RAM
+    
       run: ./gradlew setupDecompWorkspace --no-daemon --console=plain
 
     - name: Build with Gradle
-      # Thêm -x test để bỏ qua chạy test (tiết kiệm thời gian/phút build)
+      
       run: ./gradlew build -x test --stacktrace --no-daemon --console=plain
       
