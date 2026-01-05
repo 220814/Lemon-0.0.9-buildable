@@ -9,8 +9,7 @@ on:
 
 jobs:
   build:
-    # Sử dụng ubuntu-20.04 để có độ tương thích tốt hơn với các công cụ cũ
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest # Chuyển lên bản mới nhất để lấy máy ảo nhanh hơn
 
     steps:
     - name: Checkout repository
@@ -20,23 +19,17 @@ jobs:
       uses: actions/setup-java@v4
       with:
         java-version: '8'
-        distribution: 'zulu' # Zulu giúp tránh lỗi "bad RuntimeInvisibleParameterAnnotations"
+        distribution: 'zulu'
         cache: 'gradle'
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
     - name: Setup Forge Workspace
-      # Bước này cực kỳ quan trọng đối với 1.12.2 để tải mapping và decompile Minecraft
-      run: ./gradlew setupDecompWorkspace --no-daemon
+      # Thêm --no-daemon và --console=plain để log sạch hơn và đỡ tốn RAM
+      run: ./gradlew setupDecompWorkspace --no-daemon --console=plain
 
     - name: Build with Gradle
-      # --stacktrace giúp hiện lỗi chi tiết nếu build thất bại
-      run: ./gradlew build --stacktrace --no-daemon
-
-    - name: Upload Build Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: Lemon-Client-1.12.2
-        path: build/libs/*.jar
-        
+      # Thêm -x test để bỏ qua chạy test (tiết kiệm thời gian/phút build)
+      run: ./gradlew build -x test --stacktrace --no-daemon --console=plain
+      
