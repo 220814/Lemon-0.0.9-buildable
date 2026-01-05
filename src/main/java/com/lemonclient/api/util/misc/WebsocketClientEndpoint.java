@@ -2,15 +2,16 @@ package com.lemonclient.api.util.misc;
 
 import java.io.IOException;
 import java.net.URI;
-import shaded.websocket.ClientEndpoint;
-import shaded.websocket.CloseReason;
-import shaded.websocket.ContainerProvider;
-import shaded.websocket.OnClose;
-import shaded.websocket.OnMessage;
-import shaded.websocket.OnOpen;
-import shaded.websocket.RemoteEndpoint;
-import shaded.websocket.Session;
-import shaded.websocket.WebSocketContainer;
+// Thay đổi từ shaded.websocket sang javax.websocket
+import javax.websocket.ClientEndpoint;
+import javax.websocket.CloseReason;
+import javax.websocket.ContainerProvider;
+import javax.websocket.OnClose;
+import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
+import javax.websocket.RemoteEndpoint;
+import javax.websocket.Session;
+import javax.websocket.WebSocketContainer;
 
 @ClientEndpoint
 public class WebsocketClientEndpoint {
@@ -32,10 +33,12 @@ public class WebsocketClientEndpoint {
 
    public WebsocketClientEndpoint(URI endpointURI) {
       try {
+         // Đảm bảo ClassLoader có thể tìm thấy thư viện WebSocket trong môi trường Mod Minecraft
          Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
          WebSocketContainer container = ContainerProvider.getWebSocketContainer();
          this.userSession = container.connectToServer(this, endpointURI);
       } catch (Exception var3) {
+         var3.printStackTrace(); // Thêm dòng này để dễ theo dõi nếu kết nối lỗi
       }
    }
 
@@ -63,8 +66,10 @@ public class WebsocketClientEndpoint {
    }
 
    public void sendMessage(String message) {
-      RemoteEndpoint.Async remoteEndpoint = this.userSession.getAsyncRemote();
-      remoteEndpoint.sendText(message);
+      if (this.userSession != null) {
+         RemoteEndpoint.Async remoteEndpoint = this.userSession.getAsyncRemote();
+         remoteEndpoint.sendText(message);
+      }
    }
 
    public interface MessageHandler {
