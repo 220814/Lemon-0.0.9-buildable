@@ -114,10 +114,11 @@ public enum ClientEventManager implements Manager {
          }
 
          if (packet.getAction() == Action.REMOVE_PLAYER) {
-            for (AddPlayerData playerDatax : packet.getEntries()) {
+            for (AddPlayerData playerDatax : packet.getEntries()) { // Biến ở đây có tên là playerDatax
                if (playerDatax.getProfile().getId() != this.getMinecraft().session.getProfile().getId()) {
                   new Thread(() -> {
-                     String name = NameUtil.resolveName(playerData.getProfile().getId().toString());
+                     // SỬA DÒNG NÀY: Đổi playerData thành playerDatax để khớp với vòng lặp trên
+                     String name = NameUtil.resolveName(playerDatax.getProfile().getId().toString());
                      if (name != null && this.getPlayer() != null && this.getPlayer().ticksExisted >= 1000) {
                         LemonClient.EVENT_BUS.post(new PlayerLeaveEvent(name));
                      }
@@ -125,7 +126,6 @@ public enum ClientEventManager implements Manager {
                }
             }
          }
-      }
 
       if (event.getPacket() instanceof SPacketTimeUpdate) {
          LemonClient.serverUtil.update();
