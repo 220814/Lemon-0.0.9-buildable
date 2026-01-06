@@ -722,14 +722,14 @@ public class BedAura extends Module {
             EntityPlayer target = players.stream().min(Comparator.comparing(p -> p.getHealth() + p.getAbsorptionAmount())).orElse(null);
             BedAura.PlaceInfo best = null;
             if (target != null) {
-               BedAura.EntityInfo player = new BedAura.EntityInfo(target, this.predict.getValue());
+             BedAura.EntityInfo entityInfo = new BedAura.EntityInfo(target, this.predict.getValue());
                best = this.calculateBestPlacement(player, self, posList);
             }
 
             if (best == null) {
                for (EntityPlayer entityPlayerxxx : playerList) {
                   if (entityPlayerxxx != null) {
-                     BedAura.EntityInfo player = new BedAura.EntityInfo(entityPlayerxxx, this.predict.getValue());
+                     BedAura.EntityInfo targetInfo = new BedAura.EntityInfo(entityPlayerxxx, this.predict.getValue());
                      BedAura.PlaceInfo info = this.calculateBestPlacement(player, self, posList);
                      if (best == null || info.damage > best.damage) {
                         best = info;
