@@ -1,6 +1,7 @@
 # lemon 0.0.9 remapping
-- about : 
-- The provided framework: smug2f (source code for Lemon 0.0.8)
-- remapping : uid22 & PhoplyciaX v5.
-- Developer of Lemon 0.0.9 : Cute_Lemon_owo (original developer).
-- License: GLP 3.0.
+- about : This source code is for anyone who wants to customize Lemon 0.0.9.
+- Intention: After the bot remapping, we initially intended not to publish the source code, but for reasons (which we cannot disclose), we did.
+- Code: contains HWID and is not clean.
+- obfuscation : no
+- The code has been made public, please download it and clean it up yourself. Build your JAR using the source code you downloaded above and clean it up.
+- We will not download any cleaned Lemon 0.0.9 jar.
