@@ -1,4 +1,4 @@
-name: lemon 0.0.9 buildable
+name: lemon 0.0.9 buildable zulu
 
 on:
   workflow_dispatch: 
