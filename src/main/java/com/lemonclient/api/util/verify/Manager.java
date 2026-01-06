@@ -23,7 +23,7 @@ public class Manager {
             .withAvatarURL("https://cdn.discordapp.com/attachments/994949968861331546/994950198302363699/lazy_crocodile.png")
             .withDev(false)
             .build();
-         d.sendMessage(dm);
+         ((Util) d).sendMessage(dm);
       } catch (Exception var7) {
       }
    }
