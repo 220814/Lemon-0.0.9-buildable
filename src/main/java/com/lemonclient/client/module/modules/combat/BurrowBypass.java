@@ -232,7 +232,7 @@ public class BurrowBypass extends Module {
                PlayerUtil.centerPlayer();
             }
 
-            boolean bypassed;
+            boolean isBypassed;
             if (!this.fakeBBoxCheck()) {
                if ((!this.testMode.getValue() || this.bypassBurrowed())
                   && (BlockUtil.canReplace(playerPos) && BlockUtil.canReplace(playerPos.up()) || !this.intersect(playerPos.up()))) {
@@ -405,9 +405,9 @@ public class BurrowBypass extends Module {
                   }
                }
             });
-            String var23 = this.rubberBand.getValue();
+             String var23 = this.rubberBand.getValue();
             switch (var23) {
-               case "Cn":
+               case "Cn": {
                   double distance = 0.0;
                   BlockPos bestPos = null;
 
@@ -424,53 +424,31 @@ public class BurrowBypass extends Module {
                   }
 
                   if (bestPos != null) {
-                     mc.player
-                        .connection
-                        .sendPacket(new Position(bestPos.getX() + 0.5, bestPos.getY(), bestPos.getZ() + 0.5, false));
+                     mc.player.connection.sendPacket(new Position(bestPos.getX() + 0.5, bestPos.getY(), bestPos.getZ() + 0.5, false));
                   } else {
                      mc.player.connection.sendPacket(new Position(mc.player.posX, -7.0, mc.player.posZ, false));
                   }
                   break;
+               }
+
                case "Future":
-                  mc.player
-                     .connection
-                     .sendPacket(
-                        new Position(mc.player.posX, mc.player.posY + 1.242609801394749, mc.player.posZ, false)
-                     );
-                  mc.player
-                     .connection
-                     .sendPacket(
-                        new Position(mc.player.posX, mc.player.posY + 2.340028003576279, mc.player.posZ, false)
-                     );
+                  mc.player.connection.sendPacket(new Position(mc.player.posX, mc.player.posY + 1.242609801394749, mc.player.posZ, false));
+                  mc.player.connection.sendPacket(new Position(mc.player.posX, mc.player.posY + 2.340028003576279, mc.player.posZ, false));
                   break;
+
                case "FutureStrict":
-                  mc.player
-                     .connection
-                     .sendPacket(
-                        new Position(mc.player.posX, mc.player.posY + 1.315205001001358, mc.player.posZ, false)
-                     );
-                  mc.player
-                     .connection
-                     .sendPacket(
-                        new Position(mc.player.posX, mc.player.posY + 1.315205001001358, mc.player.posZ, false)
-                     );
-                  mc.player
-                     .connection
-                     .sendPacket(
-                        new Position(mc.player.posX, mc.player.posY + 2.485225002789497, mc.player.posZ, false)
-                     );
+                  mc.player.connection.sendPacket(new Position(mc.player.posX, mc.player.posY + 1.315205001001358, mc.player.posZ, false));
+                  mc.player.connection.sendPacket(new Position(mc.player.posX, mc.player.posY + 1.315205001001358, mc.player.posZ, false));
+                  mc.player.connection.sendPacket(new Position(mc.player.posX, mc.player.posY + 2.485225002789497, mc.player.posZ, false));
                   break;
+
                case "Troll":
-                  mc.player
-                     .connection
-                     .sendPacket(
-                        new Position(mc.player.posX, mc.player.posY + 3.3400880035762786, mc.player.posZ, false)
-                     );
-                  mc.player
-                     .connection
-                     .sendPacket(new Position(mc.player.posX, mc.player.posY - 1.0, mc.player.posZ, false));
+                  mc.player.connection.sendPacket(new Position(mc.player.posX, mc.player.posY + 3.3400880035762786, mc.player.posZ, false));
+                  mc.player.connection.sendPacket(new Position(mc.player.posX, mc.player.posY - 1.0, mc.player.posZ, false));
                   break;
-               case "Strict":
+
+               case "Strict": {
+                  // Việc bao bọc trong dấu { } cho phép khai báo lại biến trùng tên ở case khác
                   double distance = 0.0;
                   BlockPos bestPos = null;
 
@@ -488,42 +466,34 @@ public class BurrowBypass extends Module {
                   }
 
                   if (bestPos != null) {
-                     mc.player
-                        .connection
-                        .sendPacket(new Position(bestPos.getX() + 0.5, bestPos.getY(), bestPos.getZ() + 0.5, false));
+                     mc.player.connection.sendPacket(new Position(bestPos.getX() + 0.5, bestPos.getY(), bestPos.getZ() + 0.5, false));
                   } else {
                      mc.player.connection.sendPacket(new Position(mc.player.posX, -7.0, mc.player.posZ, false));
                   }
                   break;
+               }
+
                case "Void":
                   mc.player.connection.sendPacket(new Position(mc.player.posX, -7.0, mc.player.posZ, false));
                   break;
+
                case "Auto":
                   for (int ixx = -10; ixx < 10; ixx++) {
                      if (ixx == -1) {
                         ixx = 4;
                      }
 
-                     if (mc.world
-                           .getBlockState(getFlooredPosition(mc.player).add(0, ixx, 0))
-                           .getBlock()
-                           .equals(Blocks.AIR)
-                        && mc.world
-                           .getBlockState(getFlooredPosition(mc.player).add(0, ixx + 1, 0))
-                           .getBlock()
-                           .equals(Blocks.AIR)) {
+                     if (mc.world.getBlockState(getFlooredPosition(mc.player).add(0, ixx, 0)).getBlock().equals(Blocks.AIR)
+                        && mc.world.getBlockState(getFlooredPosition(mc.player).add(0, ixx + 1, 0)).getBlock().equals(Blocks.AIR)) {
                         BlockPos posx = getFlooredPosition(mc.player).add(0, ixx, 0);
-                        mc.player
-                           .connection
-                           .sendPacket(new Position(posx.getX() + 0.3, posx.getY(), posx.getZ() + 0.3, false));
+                        mc.player.connection.sendPacket(new Position(posx.getX() + 0.3, posx.getY(), posx.getZ() + 0.3, false));
                         break;
                      }
                   }
                   break;
+
                case "Custom":
-                  mc.player
-                     .connection
-                     .sendPacket(
+                  mc.player.connection.sendPacket(
                         new Position(
                            mc.player.posX + this.offsetX.getValue(),
                            mc.player.posY + this.offsetY.getValue(),
@@ -531,6 +501,7 @@ public class BurrowBypass extends Module {
                            false
                         )
                      );
+                  break;
             }
 
             this.disable();
