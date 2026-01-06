@@ -1400,4 +1400,4 @@ public class AutoCrystal extends Module {
          this.health = player.getHealth() + player.getAbsorptionAmount();
       }
    }
-
+}
