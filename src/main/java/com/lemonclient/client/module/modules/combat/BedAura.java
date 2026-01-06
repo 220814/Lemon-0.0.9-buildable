@@ -710,27 +710,39 @@ public class BedAura extends Module {
                placeInfo = this.calculateBestPlacement(new BedAura.EntityInfo(player, this.predict.getValue()), self, posList);
             }
             break;
-         case "Smart":
+                  case "Smart": { // Sử dụng ngoặc nhọn để cô lập các biến cục bộ (tránh lỗi already defined)
             List<EntityPlayer> players = new ArrayList<>();
 
+            // Lọc danh sách người chơi dựa trên máu
             for (EntityPlayer entityPlayerxx : playerList) {
                if (this.smartHealth.getValue() >= entityPlayerxx.getHealth() + entityPlayerxx.getAbsorptionAmount()) {
                   players.add(entityPlayerxx);
                }
             }
 
-            EntityPlayer target = players.stream().min(Comparator.comparing(p -> p.getHealth() + p.getAbsorptionAmount())).orElse(null);
+            // Tìm mục tiêu có lượng máu thấp nhất
+            EntityPlayer target = players.stream()
+                .min(Comparator.comparing(p -> p.getHealth() + p.getAbsorptionAmount()))
+                .orElse(null);
+            
             BedAura.PlaceInfo best = null;
+
             if (target != null) {
-             BedAura.EntityInfo entityInfo = new BedAura.EntityInfo(target, this.predict.getValue());
-               best = this.calculateBestPlacement(player, self, posList);
+               // Chuyển đổi target sang EntityInfo trước khi truyền vào hàm
+               BedAura.EntityInfo entityInfo = new BedAura.EntityInfo(target, this.predict.getValue());
+               // SỬA: Truyền entityInfo vào thay vì player
+               best = this.calculateBestPlacement(entityInfo, self, posList);
             }
 
+            // Nếu chưa tìm được vị trí tốt nhất, duyệt toàn bộ danh sách người chơi
             if (best == null) {
                for (EntityPlayer entityPlayerxxx : playerList) {
                   if (entityPlayerxxx != null) {
+                     // Tạo targetInfo từ player đang duyệt
                      BedAura.EntityInfo targetInfo = new BedAura.EntityInfo(entityPlayerxxx, this.predict.getValue());
-                     BedAura.PlaceInfo info = this.calculateBestPlacement(player, self, posList);
+                     // SỬA: Truyền targetInfo vào thay vì player
+                     BedAura.PlaceInfo info = this.calculateBestPlacement(targetInfo, self, posList);
+                     
                      if (best == null || info.damage > best.damage) {
                         best = info;
                      }
@@ -739,7 +751,9 @@ public class BedAura extends Module {
             }
 
             placeInfo = best;
-      }
+            break; // Kết thúc case Smart
+         }
+      } // Dấu đóng của lệnh switch
 
       return placeInfo;
    }
