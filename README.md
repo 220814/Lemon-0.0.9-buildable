@@ -1,4 +1,4 @@
-# lemon 0.0..9 buildable
+# lemon 0.0.9 buildable
 - about : This source code is for anyone who wants to customize Lemon 0.0.9.
 - Code: contains HWID and is not clean , The code contains uncorrected errors.
 - The code has been made public, please download it and clean it up yourself. Build your JAR using the source code you downloaded above and clean it up.
